@@ -29,26 +29,27 @@ export function useTasks() {
     const { data: userData } = await supabase.auth.getUser();
     if (!userData.user) {
       error.value = 'Not authorized!';
-      return
+      return false
     }
 
     const { data, error: insertError } = await supabase
-      .from('task')
+      .from('tasks')
       .insert({ ...newTask, user_id: userData.user.id })
       .select()
       .single()
 
     if (insertError) {
       error.value = insertError.message;
-      return
+      return false
     }
 
     tasks.value.unshift(data);
+    return true
   }
 
   async function updateTask(id: string, updates: Partial<Task>) {
     const { data, error: updateError } = await supabase
-      .from('task')
+      .from('tasks')
       .update(updates)
       .eq('id', id)
       .select()
@@ -56,25 +57,27 @@ export function useTasks() {
 
     if (updateError) {
       error.value = updateError.message;
-      return
+      return false
     }
 
     const index = tasks.value.findIndex((t) => t.id === id);
     if (index !== -1) tasks.value[index] = data;
+    return true
   }
 
   async function deleteTask(id: string) {
     const { error: deleteError } = await supabase
-      .from('task')
+      .from('tasks')
       .delete()
       .eq('id', id)
 
     if (deleteError) {
       error.value = deleteError.message;
-      return
+      return false
     }
 
     tasks.value = tasks.value.filter((t) => t.id !== id);
+    return true
   }
 
   return {
