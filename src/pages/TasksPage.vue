@@ -3,6 +3,7 @@ import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuth } from '@/entities/user/useAuth'
 import { useTasks } from '@/entities/task/useTasks'
+import TaskCreateForm from '@/features/task-create/TaskCreateForm.vue'
 
 const { logout, user } = useAuth();
 const { tasks, isLoading, error, fetchTasks } = useTasks();
@@ -25,6 +26,8 @@ async function handleLogout() {
     </button>
 
     <hr />
+
+    <TaskCreateForm />
 
     <p v-if="isLoading">Loading Tasks ・・・</p>
     <p v-else-if="error">Tasks Error: {{ error }}</p>
