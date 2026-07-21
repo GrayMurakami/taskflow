@@ -1,13 +1,19 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuth } from '@/entities/user/useAuth'
 import { useTasks } from '@/entities/task/useTasks'
 import TaskCreateForm from '@/features/task-create/TaskCreateForm.vue'
 
+const filter = ref<'all' | 'active' | 'done'>('all');
 const { logout, user } = useAuth();
 const { tasks, isLoading, error, fetchTasks, updateTask, deleteTask } = useTasks();
 const router = useRouter();
+
+const filteredTasks = computed(() => {
+  if (filter.value === 'all') return tasks.value;
+  return tasks.value.filter((task) => task.status === filter.value);
+});
 
 onMounted(() => {
   fetchTasks()
@@ -46,13 +52,21 @@ async function handleDelete(id: string) {
 
     <TaskCreateForm />
 
-    <p v-if="error" class="error">Tasks Error: {{ error }}</p>
+    <div>
+      <button @click="filter = 'all'" :class="{ active: filter === 'all' }">All</button>
+      <button @click="filter = 'active'" :class="{ active: filter === 'active' }">Active</button>
+      <button @click="filter = 'done'" :class="{ active: filter === 'done' }">Done</button>
+    </div>
+
+    <p v-if="error" class="error">Error: {{ error }}</p>
 
     <p v-if="isLoading">Loading Tasks ・・・</p>
-    <p v-else-if="tasks.length === 0 && !error">There are no tasks yet.</p>
+    <p v-else-if="filteredTasks.length === 0">
+      {{ filter === 'all' ? "There are no tasks yet" : filter === 'active' ? "No active tasks" : "No completed tasks" }}
+    </p>
 
     <ul v-else>
-      <li v-for="task in tasks" :key="task.id">
+      <li v-for="task in filteredTasks" :key="task.id">
         <input
           type="checkbox"
           :checked="task.status === 'done'"
@@ -72,5 +86,10 @@ async function handleDelete(id: string) {
 .done {
   text-decoration: line-through;
   opacity: 0.6;
+}
+
+button.active {
+  font-weight: bold;
+  text-decoration: underline;
 }
 </style>
