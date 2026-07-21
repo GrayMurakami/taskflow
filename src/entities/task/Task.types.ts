@@ -6,7 +6,7 @@ export interface Task {
   priority: 'low' | 'medium' | 'high'
   status: 'active' | 'done'
   deadline: string | null
-  create_at: string
+  created_at: string
 }
 
 export type NewTask = Pick<Task, 'title' | 'description' | 'priority' | 'deadline'>

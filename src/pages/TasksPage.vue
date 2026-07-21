@@ -21,7 +21,6 @@ async function handleLogout() {
   <hr />
 
   <TaskBoard />
-
 </template>
 
 <style scoped>
