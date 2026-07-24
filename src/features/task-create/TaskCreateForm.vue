@@ -2,6 +2,8 @@
 import { ref } from 'vue'
 import { useTasks } from '@/entities/task/useTasks'
 import type { NewTask } from '@/entities/task/Task.types'
+import BaseInput from '@/shared/ui/BaseInput.vue'
+import BaseButton from '@/shared/ui/BaseButton.vue'
 
 const { createTask, isLoading, error } = useTasks();
 
@@ -29,7 +31,12 @@ async function handleSubmit() {
 
 <template>
   <form @submit.prevent="handleSubmit">
-    <input v-model="title" type="text" placeholder="Task name" required />
+    <BaseInput
+      v-model="title"
+      type="text"
+      placeholder="Task name"
+      required 
+    />
     <textarea v-model="description" placeholder="Description (optional)"></textarea>
 
     <select v-model="priority">
@@ -38,12 +45,15 @@ async function handleSubmit() {
       <option value="high">High</option>
     </select>
 
-    <input v-model="deadline" type="date" />
+    <BaseInput
+      v-model="deadline"
+      type="date"
+    />
 
     <p v-if="error">{{ error }}</p>
 
-    <button type="submit" :disabled="isLoading">
+    <BaseButton type="submit" :disabled="isLoading">
       Add task
-    </button>
+    </BaseButton>
   </form>
 </template>

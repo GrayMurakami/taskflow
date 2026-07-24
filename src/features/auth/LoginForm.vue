@@ -2,6 +2,8 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuth } from '@/entities/user/useAuth'
+import BaseInput from '@/shared/ui/BaseInput.vue'
+import BaseButton from '@/shared/ui/BaseButton.vue'
 
 const email = ref('');
 const password = ref('');
@@ -33,35 +35,35 @@ async function handleGuestLogin() {
   <form @submit.prevent="handleSubmit" class="login-form">
     <h1>{{ isRegisterMode ? 'Register' : 'LogIn' }}</h1>
 
-    <input
+    <BaseInput 
       v-model="email"
       type="email"
       placeholder="Email"
-      required
+      required 
     />
-    <input
+    <BaseInput
       v-model="password"
       type="password"
       placeholder="Password"
       required
-      minlength="6"
+      :minlength="6"
     />
 
     <p v-if="error" class="error">Error: {{ error }}</p>
 
-    <button type="submit" :disabled="isLoading">
+    <BaseButton type="submit" :disabled="isLoading">
       {{ isLoading ? 'Loading ・・・' : isRegisterMode ? 'Sign Up' : 'Log In' }}
-    </button>
+    </BaseButton>
 
-    <button type="button" @click="isRegisterMode = !isRegisterMode">
+    <BaseButton type="button" variant="secondary" @click="isRegisterMode = !isRegisterMode">
       {{ isRegisterMode ? 'Already have an account? Log In' : 'Don\'t have an account? Sign up' }}
-    </button>
+    </BaseButton>
 
     <hr />
 
-    <button type="button" @click="handleGuestLogin" :disabled="isLoading">
+    <BaseButton type="button" variant="secondary" @click="handleGuestLogin" :disabled="isLoading">
       Log In as a guest (Demo)
-    </button>
+    </BaseButton>
   </form>
 </template>
 
