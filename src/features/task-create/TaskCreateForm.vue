@@ -4,7 +4,7 @@ import { useTasks } from '@/entities/task/useTasks'
 import type { NewTask } from '@/entities/task/Task.types'
 import BaseInput from '@/shared/ui/BaseInput.vue'
 import BaseButton from '@/shared/ui/BaseButton.vue'
-import BaseTextarea from '@/features/ui/BaseTextarea.vue'
+import BaseTextarea from '@/shared/ui/BaseTextarea.vue'
 
 const { createTask, isLoading, error } = useTasks();
 
