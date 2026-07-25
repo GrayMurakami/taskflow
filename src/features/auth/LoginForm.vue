@@ -39,7 +39,7 @@ async function handleGuestLogin() {
       v-model="email"
       type="email"
       placeholder="Email"
-      required 
+      required
     />
     <BaseInput
       v-model="password"

@@ -4,6 +4,7 @@ import { useTasks } from '@/entities/task/useTasks'
 import type { NewTask } from '@/entities/task/Task.types'
 import BaseInput from '@/shared/ui/BaseInput.vue'
 import BaseButton from '@/shared/ui/BaseButton.vue'
+import BaseTextarea from '@/features/ui/BaseTextarea.vue'
 
 const { createTask, isLoading, error } = useTasks();
 
@@ -37,7 +38,7 @@ async function handleSubmit() {
       placeholder="Task name"
       required 
     />
-    <textarea v-model="description" placeholder="Description (optional)"></textarea>
+    <BaseTextarea v-model="description" placeholder="Description (optional)"></BaseTextarea>
 
     <select v-model="priority">
       <option value="low">Low</option>
