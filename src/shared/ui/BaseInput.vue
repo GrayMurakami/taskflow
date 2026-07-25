@@ -27,15 +27,17 @@ defineEmits<{
 <style scoped>
 .base-input {
   padding: 8px 12px;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
   font-size: 14px;
   width: 100%;
   box-sizing: border-box;
+  background: var(--color-bg);
+  color: var(--color-text);
 }
 
 .base-input:focus {
   outline: none;
-  border-color: #3b82f6;
+  border-color: var(--color-primary);
 }
 </style>

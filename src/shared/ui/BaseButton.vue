@@ -36,17 +36,17 @@ withDefaults(
 }
 
 .primary {
-  background: #3b82f6;
-  color: white;
+  background: var(--color-primary);
+  color: var(--color-primary-text);
 }
 
 .secondary {
-  background: #e5e7eb;
-  color: #111827;
+  background: var(--color-secondary);
+  color: var(--color-secondary-text);
 }
 
 .danger {
-  background: #ef4444;
-  color: white;
+  background: var(--color-danger);
+  color: var(--color-danger-text);
 }
 </style>

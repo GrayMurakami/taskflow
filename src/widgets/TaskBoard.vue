@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, computed} from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { useTasks } from '@/entities/task/useTasks'
 import TaskCard from '@/entities/task/TaskCard.vue'
 import TaskCreateForm from '@/features/task-create/TaskCreateForm.vue'

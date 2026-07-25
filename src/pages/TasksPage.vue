@@ -2,6 +2,8 @@
 import { useRouter } from 'vue-router'
 import { useAuth } from '@/entities/user/useAuth'
 import TaskBoard from '@/widgets/TaskBoard.vue'
+import ThemeToggle from '@/shared/ui/ThemeToggle.vue'
+import BaseButton from '@/shared/ui/BaseButton.vue';
 
 const { logout, user } = useAuth();
 const router = useRouter();
@@ -13,10 +15,12 @@ async function handleLogout() {
 </script>
 
 <template>
+  <ThemeToggle />
+
   <p>Tasks page. Hello, {{ user?.email?.split('@')[0] }}</p>
-  <button @click="handleLogout">
+  <BaseButton variant="secondary" @click="handleLogout">
     EXIT
-  </button>
+  </BaseButton>
 
   <hr />
 
