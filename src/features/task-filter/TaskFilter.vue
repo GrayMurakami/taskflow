@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import BaseButton from '@/shared/ui/BaseButton.vue'
+
 defineProps<{
   modelValue: 'all' | 'active' | 'done'
 }>()
@@ -10,30 +12,26 @@ const emit = defineEmits<{
 
 <template>
   <div>
-    <button
+    <BaseButton
+      :variant="modelValue === 'all' ? 'primary' : 'secondary'"
       @click="emit('update:modelValue', 'all')"
-      :class="{ active: modelValue === 'all' }"
     >
       All
-    </button>
-    <button
+    </BaseButton>
+    <BaseButton
+      :variant="modelValue === 'active' ? 'primary' : 'secondary'"
       @click="emit('update:modelValue', 'active')"
-      :class="{ active: modelValue === 'active'}"
     >
       Active
-    </button>
-    <button
+    </BaseButton>
+    <BaseButton
+      :variant="modelValue === 'done' ? 'primary' : 'secondary'"
       @click="emit('update:modelValue', 'done')"
-      :class="{ active: modelValue === 'done' }"
     >
       Done
-    </button>
+    </BaseButton>
   </div>
 </template>
 
 <style scoped>
-button.active {
-  font-weight: bold;
-  text-decoration: underline;
-}
 </style>

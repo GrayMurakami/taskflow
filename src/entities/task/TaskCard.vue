@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Task } from './Task.types'
+import BaseButton from '@/shared/ui/BaseButton.vue'
 
 defineProps<{
   task: Task
@@ -11,7 +12,7 @@ const emit = defineEmits<{
 }>()
 
 function formatDate(dateString: string) {
-  return new Date(dateString).toLocaleDateString('en-EN')
+  return new Date(dateString).toLocaleDateString('en-GB')
 }
 </script>
 
@@ -34,7 +35,7 @@ function formatDate(dateString: string) {
     <small>
       Create at {{ formatDate(task.created_at) }}
     </small>
-    <button @click="emit('delete', task.id)">Delete</button>
+    <BaseButton variant="danger" @click="emit('delete', task.id)">Delete</BaseButton>
   </li>
 </template>
 
