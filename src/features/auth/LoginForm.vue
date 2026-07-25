@@ -29,6 +29,12 @@ async function handleGuestLogin() {
     router.push('/')
   }
 }
+
+function toggleMode() {
+  isRegisterMode.value = !isRegisterMode.value
+  email.value = ''
+  password.value = ''
+}
 </script>
 
 <template>
@@ -55,7 +61,7 @@ async function handleGuestLogin() {
       {{ isLoading ? 'Loading ・・・' : isRegisterMode ? 'Sign Up' : 'Log In' }}
     </BaseButton>
 
-    <BaseButton type="button" variant="secondary" @click="isRegisterMode = !isRegisterMode">
+    <BaseButton type="button" variant="secondary" @click="toggleMode">
       {{ isRegisterMode ? 'Already have an account? Log In' : 'Don\'t have an account? Sign up' }}
     </BaseButton>
 
