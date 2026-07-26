@@ -38,7 +38,7 @@ function formatDate(dateString: string) {
       <div class="ticket__top">
         <h3 class="ticket__title">{{ task.title }}</h3>
         <div v-if="task.status === 'done'" class="ticket__stamp">DONE</div>
-        <BaseButton variant="danger" @click="emit('delete', task.id)">
+        <BaseButton class="ticket__delete" variant="danger" @click="emit('delete', task.id)">
           Delete
         </BaseButton>
       </div>
@@ -47,8 +47,8 @@ function formatDate(dateString: string) {
 
       <div class="ticket__meta mono">
         <span>#{{ task.priority }}</span>
-        <span v-if="task.deadline">due {{ formatDate(task.deadline) }}</span>
-        <span>{{ formatDate(task.created_at) }}</span>
+        <span v-if="task.deadline">due: {{ formatDate(task.deadline) }}</span>
+        <span>creat: {{ formatDate(task.created_at) }}</span>
       </div>
     </div>    
   </li>
@@ -143,14 +143,13 @@ function formatDate(dateString: string) {
 .ticket__top {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .ticket__title {
   font-size: 15px;
   font-weight: 600;
   word-break: break-word;
-  flex: 1;
 }
 
 .ticket.done .ticket__title {
@@ -170,6 +169,11 @@ function formatDate(dateString: string) {
   letter-spacing: 0.1em;
   transform: rotate(-6deg);
   opacity: 0.7;
+}
+
+.ticket__delete {
+  margin-left: auto;
+  flex-shrink: 0;
 }
 
 .ticket__description {

@@ -47,4 +47,9 @@ defineEmits<{
   border-color: var(--color-ink);
   box-shadow: 0 0 0 3px rgba(47, 111, 107, 0.15);
 }
+
+.base-input[type='date']::-webkit-calendar-picker-indicator {
+  filter: var(--calendar-icon-filter, none);
+  cursor: pointer;
+}
 </style>

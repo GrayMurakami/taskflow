@@ -40,7 +40,7 @@ async function handleSubmit() {
     />
     <BaseTextarea v-model="description" placeholder="Description (optional)"></BaseTextarea>
 
-    <select v-model="priority">
+    <select v-model="priority" class="select">
       <option value="low">Low</option>
       <option value="medium">Medium</option>
       <option value="high">High</option>
@@ -58,3 +58,21 @@ async function handleSubmit() {
     </BaseButton>
   </form>
 </template>
+
+<style scoped>
+.select {
+  padding: 10px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-family: var(--font-body);
+  background: var(--color-surface-raised);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--color-ink);
+}
+</style>

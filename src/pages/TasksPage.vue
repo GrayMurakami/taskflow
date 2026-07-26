@@ -15,17 +15,25 @@ async function handleLogout() {
 </script>
 
 <template>
-  <ThemeToggle />
+  <div class="page">
+    <div class="page-header">
+      <div>
+        <h1>TaskFlow</h1>
+        <span class="user-tag mono">{{ user?.email?.split('@')[0] }}</span>
+      </div>
+      <div class="page-header__actions">
+        <ThemeToggle />
+        <BaseButton variant="secondary" @click="handleLogout">Exit</BaseButton>
+      </div>
+    </div>
 
-  <p>Tasks page. Hello, {{ user?.email?.split('@')[0] }}</p>
-  <BaseButton variant="secondary" @click="handleLogout">
-    EXIT
-  </BaseButton>
-
-  <hr />
-
-  <TaskBoard />
+    <TaskBoard />
+  </div>
 </template>
 
 <style scoped>
+.page-header__actions {
+  display: flex;
+  gap: 10px;
+}
 </style>

@@ -1,29 +1,37 @@
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px var(--color-surface-raised) inset;
+  -webkit-text-fill-color: var(--color-text);
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 :root {
   /* Light theme */
-  --color-bg: #edefea;
-  --color-surface: #f7f8f5;
+  --color-bg: #e4e7df;
+  --color-surface: #eef0e9;
   --color-surface-raised: #ffffff;
-  --color-text: #1a2420;
+  --color-text: #171f1b;
   --color-text-muted: #5c6b64;
-  --color-border: #d3d8cf;
+  --color-border: #c3c9bc;
 
-  --color-ink: #2f6f6b;
+  --color-ink: #256561;
   --color-ink-text: #ffffff;
-  --color-secondary: #dfe3db;
-  --color-secondary-text: #1a2420;
-  --color-danger: #c4623d;
+  --color-secondary: #d8dccf;
+  --color-secondary-text: #171f1b;
+  --color-danger: #b8552f;
   --color-danger-text: #ffffff;
 
-  --priority-low: #9aa39c;
-  --priority-medium: #2f6f6b;
-  --priority-high: #c4623d;
+  --priority-low: #8b968c;
+  --priority-medium: #256561;
+  --priority-high: #b8552f;
 
   --font-display: 'Space Grotesk', sans-serif;
   --font-body: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
   --radius: 10px;
-  --shadow-card: 0 1px 2px rgba(26, 36, 32, 0.06), 0 1px 1px rgba(26, 36, 32, 0.04);
+  --shadow-card: 0 1px 3px rgba(23, 31, 27, 0.08), 0 1px 2px rgba(23, 31, 27, 0.06);
 }
 
 [data-theme='dark'] {
@@ -44,6 +52,8 @@
   --priority-low: #5c6b64;
   --priority-medium: #5fb8b3;
   --priority-high: #e08361;
+
+  --calendar-icon-filter: invert(1);
 
   --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2);
 }
@@ -75,4 +85,29 @@ small, .mono {
 
 button {
   font-family: inherit;
+}
+
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 20px 80px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.page-header h1 {
+  font-size: 22px;
+}
+
+.user-tag {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
