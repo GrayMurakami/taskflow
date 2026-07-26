@@ -26,18 +26,25 @@ defineEmits<{
 
 <style scoped>
 .base-input {
-  padding: 8px 12px;
+  padding: 10px 14px;
   border: 1px solid var(--color-border);
-  border-radius: 6px;
+  border-radius: var(--radius);
   font-size: 14px;
+  font-family: var(--font-body);
   width: 100%;
   box-sizing: border-box;
-  background: var(--color-bg);
+  background: var(--color-surface-raised);
   color: var(--color-text);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.base-input::placeholder {
+  color: var(--color-text-muted);
 }
 
 .base-input:focus {
   outline: none;
-  border-color: var(--color-primary);
+  border-color: var(--color-ink);
+  box-shadow: 0 0 0 3px rgba(47, 111, 107, 0.15);
 }
 </style>

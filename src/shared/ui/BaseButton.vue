@@ -22,12 +22,18 @@ withDefaults(
 
 <style scoped>
 .base-button {
-  padding: 8px 16px;
+  padding: 9px 18px;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius);
   cursor: pointer;
   font-size: 14px;
-  transition: opacity 0.2s;
+  font-weight: 500;
+  font-family: var(--font-body);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.base-button:active:not(:disabled) {
+  transform: scale(0.97);
 }
 
 .base-button:disabled {
@@ -36,8 +42,13 @@ withDefaults(
 }
 
 .primary {
-  background: var(--color-primary);
-  color: var(--color-primary-text);
+  background: var(--color-ink);
+  color: var(--color-ink-text);
+  box-shadow: var(--shadow-card);
+}
+
+.primary:hover:not(:disabled) {
+  box-shadow: 0 2px 8px rgba(47, 111, 107, 0.35);
 }
 
 .secondary {
@@ -45,7 +56,17 @@ withDefaults(
   color: var(--color-secondary-text);
 }
 
+.secondary:hover:not(:disabled) {
+  background: var(--color-border);
+}
+
 .danger {
+  background: transparent;
+  color: var(--color-danger);
+  border: 1px solid var(--color-danger);
+}
+
+.danger:hover:not(:disabled) {
   background: var(--color-danger);
   color: var(--color-danger-text);
 }

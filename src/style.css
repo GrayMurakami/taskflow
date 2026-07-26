@@ -1,35 +1,78 @@
 :root {
-  --color-bg: #ffffff;
-  --color-surface: #f3f4f6;
-  --color-text: #111827;
-  --color-text-muted: #6b7280;
-  --color-border: #d1d5db;
+  /* Light theme */
+  --color-bg: #edefea;
+  --color-surface: #f7f8f5;
+  --color-surface-raised: #ffffff;
+  --color-text: #1a2420;
+  --color-text-muted: #5c6b64;
+  --color-border: #d3d8cf;
 
-  --color-primary: #3b82f6;
-  --color-primary-text: #ffffff;
-  --color-secondary: #e5e7eb;
-  --color-secondary-text: #111827;
-  --color-danger: #ef4444;
+  --color-ink: #2f6f6b;
+  --color-ink-text: #ffffff;
+  --color-secondary: #dfe3db;
+  --color-secondary-text: #1a2420;
+  --color-danger: #c4623d;
   --color-danger-text: #ffffff;
+
+  --priority-low: #9aa39c;
+  --priority-medium: #2f6f6b;
+  --priority-high: #c4623d;
+
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --radius: 10px;
+  --shadow-card: 0 1px 2px rgba(26, 36, 32, 0.06), 0 1px 1px rgba(26, 36, 32, 0.04);
 }
 
 [data-theme='dark'] {
-  --color-bg: #111827;
-  --color-surface: #1f2937;
-  --color-text: #f9fafb;
-  --color-text-muted: #9ca3af;
-  --color-border: #374151;
+  --color-bg: #12181c;
+  --color-surface: #1b2328;
+  --color-surface-raised: #212b31;
+  --color-text: #eef2f0;
+  --color-text-muted: #8ea19a;
+  --color-border: #2c383e;
 
-  --color-primary: #60a5fa;
-  --color-primary-text: #111827;
-  --color-secondary: #374151;
-  --color-secondary-text: #f9fafb;
-  --color-danger: #f87171;
-  --color-danger-text: #111827;
+  --color-ink: #5fb8b3;
+  --color-ink-text: #0e1a18;
+  --color-secondary: #29343a;
+  --color-secondary-text: #eef2f0;
+  --color-danger: #e08361;
+  --color-danger-text: #1a1008;
+
+  --priority-low: #5c6b64;
+  --priority-medium: #5fb8b3;
+  --priority-high: #e08361;
+
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
+  margin: 0;
   background: var(--color-bg);
   color: var(--color-text);
-  transition: background 0.2s, color 0.2s;
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  transition: background 0.25s ease, color 0.25s ease;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  margin: 0;
+}
+
+small, .mono {
+  font-family: var(--font-mono);
+}
+
+button {
+  font-family: inherit;
 }
