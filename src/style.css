@@ -22,6 +22,9 @@ input:-webkit-autofill:focus {
   --color-danger: #b8552f;
   --color-danger-text: #ffffff;
 
+  --color-success: #a8752e;
+  --color-success-text: #ffffff;
+
   --priority-low: #8b968c;
   --priority-medium: #256561;
   --priority-high: #b8552f;
@@ -48,6 +51,9 @@ input:-webkit-autofill:focus {
   --color-secondary-text: #eef2f0;
   --color-danger: #e08361;
   --color-danger-text: #1a1008;
+
+  --color-success: #d9a441;
+  --color-success-text: #1a1008;
 
   --priority-low: #5c6b64;
   --priority-medium: #5fb8b3;
