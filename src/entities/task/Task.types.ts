@@ -10,7 +10,7 @@ export interface Task {
   description: string | null
   priority: 'low' | 'medium' | 'high'
   status: 'todo' | 'inprogress' | 'done'
-  tags: []
+  tags: string[]
   deadline: string | null
   created_at: string
   subtasks: Subtask[]

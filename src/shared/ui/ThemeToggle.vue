@@ -12,17 +12,6 @@ const { theme, toggleTheme } = useTheme();
 </template>
 
 <style scoped>
-/* .theme-toggle {
-  background: var(--color-surface-raised);
-  color: var(--color-text);
-  border: 1px solid var(--color-border);
-  box-shadow: var(--shadow-card);
-}
-
-.theme-toggle:hover:not(:disabled) {
-  background: var(--color-secondary);
-} */
-
 .theme-toggle {
   background: var(--color-surface-raised);
   color: var(--color-text);
