@@ -2,22 +2,23 @@
 withDefaults(
   defineProps<{
     type?: 'button' | 'submit'
-    variant?: 'primary' | 'secondary' | 'danger'
+    variant?: 'primary' | 'secondary' | 'danger' | 'ghost'
+    size?: 'md' | 'sm'
     disabled?: boolean
   }>(),
   {
     type: 'button',
     variant: 'primary',
+    size: 'md',
     disabled: false,
   }
 )
 </script>
 
 <template>
-  <button :type="type" :disabled="disabled" :class="['base-button', variant]">
+  <button :type="type" :disabled="disabled" :class="['base-button', variant, size]">
     <slot />
   </button>
-  
 </template>
 
 <style scoped>
@@ -29,7 +30,7 @@ withDefaults(
   font-size: 14px;
   font-weight: 500;
   font-family: var(--font-body);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease, background 0.15s ease, color 0.15s ease;
 }
 
 .base-button:active:not(:disabled) {
@@ -39,6 +40,11 @@ withDefaults(
 .base-button:disabled {
   cursor: not-allowed;
   opacity: 0.5;
+}
+
+.base-button.sm {
+  padding: 8px 0;
+  font-size: 13px;
 }
 
 .primary {
@@ -69,5 +75,15 @@ withDefaults(
 .danger:hover:not(:disabled) {
   background: var(--color-danger);
   color: var(--color-danger-text);
+}
+
+.ghost {
+  background: transparent;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.ghost:hover:not(:disabled) {
+  color: var(--color-text);
 }
 </style>
