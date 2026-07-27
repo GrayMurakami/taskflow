@@ -15,6 +15,10 @@ const deadline = ref('');
 const tagsInput = ref('');
 const subTaskInput = ref('');
 
+const emit = defineEmits<{
+  created: []
+}>();
+
 async function handleSubmit() {
   const tags = tagsInput.value
     .split(',')
@@ -43,6 +47,7 @@ async function handleSubmit() {
     deadline.value = ''
     tagsInput.value = ''
     subTaskInput.value = ''
+    emit('created')
   }
 }
 </script>

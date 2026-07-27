@@ -2,7 +2,6 @@
 import { onMounted, ref, computed } from 'vue'
 import { useTasks } from '@/entities/task/useTasks'
 import TaskCard from '@/entities/task/TaskCard.vue'
-import TaskCreateForm from '@/features/task-create/TaskCreateForm.vue'
 
 const { tasks, isLoading, error, fetchTasks, updateTask, deleteTask } = useTasks();
 
@@ -112,8 +111,6 @@ async function dropOnColumn(status: 'todo' | 'inprogress' | 'done') {
 </script>
 
 <template>
-  <TaskCreateForm />
-
   <div class="stats">
     <div class="stat-card">
       <span class="stat-card__label mono">

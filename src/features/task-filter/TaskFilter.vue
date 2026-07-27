@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import BaseButton from '@/shared/ui/BaseButton.vue'
 
 defineProps<{
@@ -34,4 +34,4 @@ const emit = defineEmits<{
 </template>
 
 <style scoped>
-</style>
+</style> -->
