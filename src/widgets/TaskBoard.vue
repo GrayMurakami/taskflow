@@ -6,7 +6,8 @@ import TaskCard from '@/entities/task/TaskCard.vue'
 const { tasks, isLoading, error, fetchTasks, updateTask, deleteTask } = useTasks();
 
 const search = ref('');
-const sortBy = ref<'manual' | 'created' | 'deadline' | 'priority'>('manual');
+const sortBy = ref<'created' | 'deadline' | 'manual' | 'priority'>('manual');
+const sortMenuOpen = ref(false);
 const activeTag = ref<string | null>(null);
 const showTags = ref(true);
 const draggedId = ref<string | null>(null);
@@ -14,6 +15,27 @@ const draggedId = ref<string | null>(null);
 onMounted(() => {
   fetchTasks()
 });
+
+const sortOptions: { value: 'created' | 'deadline' | 'manual' | 'priority'; label: string }[] = [ 
+  {
+    value: 'created', 
+    label: 'Newest first'
+  },
+  { 
+    value: 'deadline', 
+    label: 'By deadline'
+  },
+  {
+    value: 'manual',
+    label: 'Custom order'
+  },
+  {
+    value: 'priority',
+    label: 'By priority'
+  },
+];
+
+const sortLabel = computed(() => sortOptions.find(o => o.value === sortBy.value)?.label ?? '');
 
 const allTags = computed(() => Array.from(new Set(tasks.value.flatMap(t => t.tags))));
 
@@ -166,23 +188,39 @@ async function dropOnColumn(status: 'todo' | 'inprogress' | 'done') {
       placeholder="Search tasks..."
       class="toolbar__search"    
     />
-    <select 
-      v-model="sortBy"
-      class="toolbar__sort"
-    >
-      <option value="created">
-        Newest first
-      </option>
-      <option value="deadline">
-        By deadline
-      </option>
-      <option value="manual">
-        Custom order
-      </option>
-      <option value="priority">
-        By priority
-      </option>
-    </select>
+    <div class="sort-dropdown">
+      <button
+        type="button"
+        class="sort-dropdown__trigger"
+        @click="sortMenuOpen = !sortMenuOpen"      
+      >
+        {{ sortLabel }}
+        <span
+          class="sort-dropdown__chevron"
+          :class="{ open: sortMenuOpen }"        
+        ></span>
+      </button>
+      <div
+        v-if="sortMenuOpen"
+        class="sort-dropdown__backdrop"
+        @click="sortMenuOpen = false"
+      ></div>
+      <div
+        v-if="sortMenuOpen"
+        class="sort-dropdown__menu"
+      >
+        <button
+          v-for="opt in sortOptions"
+          :key="opt.value"
+          type="button"
+          class="sort-dropdown__item"
+          :class="{active: sortBy === opt.value }"
+          @click="sortBy = opt.value; sortMenuOpen = false"
+        >
+          {{ opt.label }}
+        </button>
+      </div>
+    </div>
   </div>
 
   <div class="tags-row">
@@ -396,15 +434,78 @@ async function dropOnColumn(status: 'todo' | 'inprogress' | 'done') {
   color: var(--color-text); 
 }
 
-.toolbar__sort { 
+.sort-dropdown { 
+  position: relative; 
+}
+
+.sort-dropdown__trigger {
+  display: flex; 
+  align-items: center; 
+  gap: 8px;
   padding: 10px 14px; 
   border: 1px solid var(--color-border); 
-  border-radius: var(--radius); 
+  border-radius: var(--radius);
   font-size: 13px; 
   font-family: var(--font-body); 
-  background: var(--color-surface-raised); 
+  background: var(--color-surface-raised);
   color: var(--color-text); 
   cursor: pointer; 
+  white-space: nowrap;
+}
+
+.sort-dropdown__chevron {
+  width: 0; height: 0;
+  border-left: 4px solid transparent; 
+  border-right: 4px solid transparent;
+  border-top: 5px solid var(--color-text-muted);
+  transition: transform 0.15s ease;
+}
+
+.sort-dropdown__chevron.open { 
+  transform: rotate(180deg); 
+}
+
+.sort-dropdown__backdrop { 
+  position: fixed; 
+  inset: 0; 
+  z-index: 9; 
+}
+
+.sort-dropdown__menu {
+  position: absolute; 
+  top: calc(100% + 6px); 
+  right: 0; 
+  min-width: 190px;
+  background: var(--color-surface-raised); 
+  border-radius: 12px; 
+  box-shadow: var(--shadow-card);
+  padding: 6px; 
+  z-index: 10; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 2px;
+}
+
+.sort-dropdown__item {
+  text-align: left; 
+  border: none; 
+  border-radius: 8px; 
+  padding: 9px 12px;
+  font-size: 13px; 
+  font-family: var(--font-body); 
+  cursor: pointer;
+  background: transparent; 
+  color: var(--color-text);
+}
+
+.sort-dropdown__item:hover { 
+  background: rgba(127, 127, 127, 0.22); 
+}
+
+.sort-dropdown__item.active { 
+  background: var(--color-secondary); 
+  color: var(--color-secondary-text); 
+  font-weight: 600; 
 }
 
 .tags-row { 
@@ -445,7 +546,8 @@ async function dropOnColumn(status: 'todo' | 'inprogress' | 'done') {
 }
 
 .tag-chip.active { 
-  background: var(--color-ink); color: var(--color-ink-text); }
+  background: var(--color-ink); color: var(--color-ink-text); 
+}
 
 .board { 
   display: grid; 

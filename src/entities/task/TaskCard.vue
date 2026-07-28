@@ -57,8 +57,6 @@ function formatDate(dateString: string) {
       <span class="ticket__delete-x"></span>
     </BaseButton>
 
-    <div class="ticket__perforation"></div>
-
     <div class="ticket__body">
       <div class="ticket__top">
         <button
@@ -66,7 +64,9 @@ function formatDate(dateString: string) {
           class="ticket__check"
           @click="emit('markDone', task.id)"
           aria-label="Mark done"
-        ></button>
+        >
+          <span class="ticket__check-icon"></span>
+        </button>
         <div v-else class="ticket__stamp">DONE</div>
         <h3 class="ticket__title">{{ task.title }}</h3>
       </div>
@@ -127,6 +127,7 @@ function formatDate(dateString: string) {
   margin-bottom: 12px;
   cursor: grab;
   transition: box-shadow 0.2s ease, opacity 0.2s ease;
+  transform: translateZ(0);
 }
 
 .ticket:hover {
@@ -134,18 +135,28 @@ function formatDate(dateString: string) {
 }
 
 .ticket__flag {
-  width: 5px;
+  width: 6px;
   flex-shrink: 0;
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+
+.ticket__check-icon {
+  display: block;
+  width: 8px;
+  height: 5px;
+  border-left: 2px solid var(--color-text-muted);
+  border-bottom: 2px solid var(--color-text-muted);
+  transform: rotate(-45deg) translate(1px, -1px);
 }
 
 .priority-low {
-  background: var(--priority-low);
+  background: linear-gradient(180deg, var(--priority-low), color-mix(in srgb, var(--priority-low) 60%, black));
 }
 .priority-medium {
-  background: var(--priority-medium);
+  background: linear-gradient(180deg, var(--priority-medium), color-mix(in srgb, var(--priority-medium) 60%, black));
 }
 .priority-high {
-  background: var(--priority-high);
+  background: linear-gradient(180deg, var(--priority-high), color-mix(in srgb, var(--priority-high) 60%, black));
 }
 
 .ticket__delete {
@@ -188,12 +199,6 @@ function formatDate(dateString: string) {
 
 .ticket__delete-x::after { 
   transform: translate(-50%, -50%) rotate(-45deg); 
-}
-
-.ticket__perforation { 
-  width: 0; 
-  border-left: 2px dashed var(--color-border); 
-  margin: 12px 0; 
 }
 
 .ticket__body { 
