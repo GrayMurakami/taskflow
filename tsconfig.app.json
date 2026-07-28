@@ -6,7 +6,6 @@
     "allowArbitraryExtensions": true,
 
     /* Path alias */
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     },
