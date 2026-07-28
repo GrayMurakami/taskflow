@@ -529,7 +529,6 @@ async function dropOnColumn(status: 'todo' | 'inprogress' | 'done') {
   display: flex; 
   gap: 8px; 
   overflow-x: auto; 
-  padding-bottom: 4px; 
 }
 
 .tag-chip { 
@@ -556,11 +555,12 @@ async function dropOnColumn(status: 'todo' | 'inprogress' | 'done') {
   align-items: start; 
 }
 
-.column { 
-  background: var(--color-surface); 
-  border-radius: 16px; 
-  padding: 14px; 
-  min-height: 160px; 
+.column {
+  background: var(--color-surface);
+  border-radius: 16px;
+  padding: 14px;
+  min-height: 160px;
+  box-shadow: 0 1px 4px rgba(23, 31, 27, 0.10), 0 4px 12px rgba(23, 31, 27, 0.06);
 }
 
 .column__head { 

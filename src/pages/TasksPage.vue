@@ -84,7 +84,7 @@ async function handleLogout() {
 
 .page-header__actions {
   display: flex;
-  gap: 10px;
+  gap: 13px;
   align-items: center;
 }
 
@@ -103,6 +103,8 @@ async function handleLogout() {
   padding-left: 12px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  position: relative;
+  top: 1px;
 }
 
 .modal-overlay {
@@ -131,5 +133,17 @@ async function handleLogout() {
   max-width: 1200px;
   margin: 0 auto;
   padding: 24px 24px 80px;
+}
+
+@media (max-width: 480px) {
+  .page-header__inner {
+    flex-wrap: wrap;
+    gap: 10px;
+    row-gap: 8px;
+  }
+  .page-header__actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
 }
 </style>

@@ -48,6 +48,12 @@ async function register(email: string, password: string) {
     return false
   }
 
+  if (data.user?.identities && data.user.identities.length === 0) {
+    error.value = 'This email is already registered. Please log in instead.';
+    isLoading.value = false;
+    return false
+  }
+
   user.value = data.user;
   isLoading.value = false;
   return true

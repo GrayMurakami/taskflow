@@ -54,6 +54,9 @@ async function handleSubmit() {
 
 <template>
   <form @submit.prevent="handleSubmit" class="create-form">
+    <h3 class="create-form__title">
+      New Task
+    </h3>
     <BaseInput
       v-model="title"
       type="text"
@@ -111,11 +114,23 @@ async function handleSubmit() {
       class="create-form__area"
     />
 
-    <p v-if="error" class="error">{{ error }}</p>
+    <div class="create-form__actions">
+      <BaseButton
+        type="button"
+        variant="secondary"
+        @click="emit('created')"
+      >
+        Cancel
+      </BaseButton>
+      <BaseButton 
+        type="submit" 
+        :disabled="isLoading"
+      >
+        Add task
+      </BaseButton>
+    </div>
 
-    <BaseButton type="submit" :disabled="isLoading">
-      Add task
-    </BaseButton>
+    <p v-if="error" class="error">{{ error }}</p>
   </form>
 </template>
 
@@ -130,6 +145,21 @@ async function handleSubmit() {
 .create-form__area { 
   resize: vertical; 
   min-height: 56px; 
+}
+
+.create-form__title { 
+  font-size: 18px; 
+  margin: 0 0 4px; 
+}
+
+.create-form__actions { 
+  display: flex; 
+  gap: 10px; 
+  margin-top: 4px; 
+}
+
+.create-form__actions .base-button { 
+  flex: 1; 
 }
 
 .priority-switch { 
