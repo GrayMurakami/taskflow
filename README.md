@@ -2,7 +2,7 @@
  
 A task management app with a kanban board, drag & drop, tags, subtasks, and a dark/light theme — built with Vue 3, TypeScript, and Supabase.
  
-**[Live Demo](https://taskflow-bygray.netlify.app)** — click *"Continue as guest"* to explore without signing up.
+**[Live Demo](https://taskflow-bygray.netlify.app/login)** — click *"Continue as guest"* to explore without signing up.
  
 
 ![TaskFlow Login Page Dark](./docs/login_page_darkMode.jpg) 
