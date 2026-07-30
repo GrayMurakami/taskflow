@@ -101,6 +101,9 @@ async function handleSubmit() {
       </button>
     </div>
 
+    <label class="field-label mono">
+      Deadline:
+    </label>
     <BaseInput
       v-model="deadline"
       type="date"
@@ -186,9 +189,18 @@ async function handleSubmit() {
   background: transparent;
   color: var(--color-text-muted);
 }
+
 .priority-switch__opt.active { 
   background: var(--pc); 
   color: var(--color-ink-text); 
+}
+
+.field-label {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: -6px;
 }
 
 .error { 
