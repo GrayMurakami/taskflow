@@ -61,12 +61,14 @@ async function handleSubmit() {
       v-model="title"
       type="text"
       placeholder="Task name"
+      maxlength="50"
       required 
     />
     <BaseTextarea 
       v-model="description" 
       placeholder="Description (optional)"
       class="create-form__area"
+      maxlength="200"
     />
 
     <div class="priority-switch">
@@ -107,11 +109,13 @@ async function handleSubmit() {
       v-model="tagsInput"
       type="text"
       placeholder="Tags, comma separated (optional)"
+      maxlength="50"
     />
     <BaseTextarea
       v-model="subTaskInput"
       placeholder="Subtasks, one per line (optional)"
       class="create-form__area"
+      maxlength="300"
     />
 
     <div class="create-form__actions">

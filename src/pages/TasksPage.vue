@@ -50,10 +50,13 @@ async function handleLogout() {
     v-if="showModal"
     class="modal-overlay"
     @click="showModal = false"
+    @keydown.esc="showModal = false"
   >
     <div
       class="modal-card"
       @click.stop
+      role="dialog"
+      aria-modal="true"
     >
       <TaskCreateForm
         @created="showModal = false"

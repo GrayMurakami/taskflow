@@ -43,7 +43,8 @@ function formatDate(dateString: string) {
     :class="{ done: isDone}"
     draggable="true"
     @dragstart="emit('dragStart', task.id)"
-    @dragover.prevent="emit('dragOverCard', task.id)"
+    @dragenter.prevent="emit('dragOverCard', task.id)"
+    @dragover.prevent
     @dragend="emit('dragEnd')"
   >
     <div class="ticket__flag" :class="`priority-${task.priority}`"></div>

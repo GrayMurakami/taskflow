@@ -25,6 +25,7 @@ async function fetchTasks() {
 }
 
 async function createTask(newTask: NewTask) {
+  error.value = null;
   const { data: userData } = await supabase.auth.getUser();
   if (!userData.user) {
     error.value = 'Not authorized!';
@@ -47,6 +48,7 @@ async function createTask(newTask: NewTask) {
 }
 
 async function updateTask(id: string, updates: Partial<Task>) {
+  error.value = null;
   const { data, error: updateError } = await supabase
     .from('tasks')
     .update(updates)
@@ -65,6 +67,7 @@ async function updateTask(id: string, updates: Partial<Task>) {
 }
 
 async function deleteTask(id: string) {
+  error.value = null;
   const { error: deleteError } = await supabase
     .from('tasks')
     .delete()
