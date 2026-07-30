@@ -1,9 +1,9 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import './style.css'
-import App from './App.vue'
-import router from './app/router'
 import { useAuth } from '@/entities/user/useAuth'
+import App from '@/App.vue'
+import router from '@/app/router'
+import './style.css'
 
 async function bootstrap() {
   const app = createApp(App);
