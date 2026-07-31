@@ -3,7 +3,7 @@ import { createPinia } from 'pinia'
 import { useAuth } from '@/entities/user/useAuth'
 import App from '@/App.vue'
 import router from '@/app/router'
-import './style.css'
+import '@/style.css'
 
 async function bootstrap() {
   const app = createApp(App);
