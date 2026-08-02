@@ -6,7 +6,10 @@ const { theme, toggleTheme } = useTheme();
 </script>
 
 <template>
-  <BaseButton class="theme-toggle" @click="toggleTheme">
+  <BaseButton 
+    class="theme-toggle" 
+    @click="toggleTheme"
+  >
     {{ theme === 'light' ? '🌙 Dark' : '☀️ Light' }}
   </BaseButton>  
 </template>
