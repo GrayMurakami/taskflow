@@ -82,14 +82,26 @@ function toggleMode(mode: boolean) {
         :minlength="6"
       />
 
-      <p v-if="error" class="error">Error: {{ error }}</p>
+      <p 
+        v-if="error" 
+        class="error"
+      >
+        Error: {{ error }}
+      </p>
 
-      <BaseButton type="submit" :disabled="isLoading">
+      <BaseButton 
+        type="submit" 
+        :disabled="isLoading"
+      >
         {{ isLoading ? 'Loading ・・・' : isRegisterMode ? 'Sign Up' : 'Log In' }}
       </BaseButton>
     </form>
 
-    <div class="login-card__divider"><span>or</span></div>
+    <div class="login-card__divider">
+      <span>
+        or
+      </span>
+    </div>
 
     <BaseButton
       type="button"
