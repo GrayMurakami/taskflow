@@ -12,7 +12,7 @@ withDefaults(
     size: 'md',
     disabled: false,
   }
-)
+);
 </script>
 
 <template>

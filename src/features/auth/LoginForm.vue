@@ -18,7 +18,7 @@ async function handleSubmit() {
     : await login(email.value, password.value)
 
   if (success) {
-    router.push('/')
+    router.push('/');
   }
 }
 
@@ -26,14 +26,14 @@ async function handleGuestLogin() {
   const success = await loginAsGuest();
 
   if (success) {
-    router.push('/')
+    router.push('/');
   }
 }
 
 function toggleMode(mode: boolean) {
-  isRegisterMode.value = mode
-  email.value = ''
-  password.value = ''
+  isRegisterMode.value = mode;
+  email.value = '';
+  password.value = '';
 }
 </script>
 

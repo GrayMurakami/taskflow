@@ -41,13 +41,13 @@ async function handleSubmit() {
   });
 
   if (success) {
-    title.value = ''
-    description.value = ''
-    priority.value = 'medium'
-    deadline.value = ''
-    tagsInput.value = ''
-    subTaskInput.value = ''
-    emit('created')
+    title.value = '';
+    description.value = '';
+    priority.value = 'medium';
+    deadline.value = '';
+    tagsInput.value = '';
+    subTaskInput.value = '';
+    emit('created');
   }
 }
 </script>
