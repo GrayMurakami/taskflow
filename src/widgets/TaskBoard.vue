@@ -528,7 +528,13 @@ async function dropOnColumn(status: 'todo' | 'inprogress' | 'done') {
 .tags-row__scroll { 
   display: flex; 
   gap: 8px; 
-  overflow-x: auto; 
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.tags-row__scroll::-webkit-scrollbar {
+  display: none;
 }
 
 .tag-chip { 

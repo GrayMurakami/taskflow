@@ -173,6 +173,7 @@ async function handleSubmit() {
           :placeholder="selectedTags.length ? 'Add another…' : 'Tags, comma separated (optional)'"
           @keydown="onTagKeyDown"
           @focus="tagMenuOpen = true"
+          maxlength="30"
         />
       </div>
 
