@@ -12,9 +12,9 @@ const title = ref('');
 const description = ref('');
 const priority = ref<NewTask['priority']>('medium');
 const deadline = ref('');
-const tagsInput = ref('');
-const showExistingTags = ref(false);
-const selectedTags = ref<Set<string>>(new Set());
+const tagDraft = ref('');
+const tagMenuOpen = ref(false);
+const selectedTags = ref<string[]>([]);
 const subTaskInput = ref('');
 
 const emit = defineEmits<{
@@ -25,27 +25,43 @@ const existingTags = computed(() =>
   Array.from(new Set(tasks.value.flatMap((t) => t.tags))).sort()
 );
 
-function toggleExistingTag(tag: string) {
-  if (selectedTags.value.has(tag)) {
-    selectedTags.value.delete(tag);
-  } else {
-    selectedTags.value.add(tag);
+const draftLower = computed(() => tagDraft.value.trim().toLowerCase());
+
+const tagSuggestions = computed(() =>
+  existingTags.value
+    .filter((t) => !selectedTags.value.includes(t))
+    .filter((t) => !draftLower.value || t.toLowerCase().includes(draftLower.value))
+);
+
+const showCreateTagOption = computed(() =>
+  draftLower.value.length > 0 && !existingTags.value.some((t) => t.toLowerCase() === draftLower.value)
+);
+
+function addTag(name: string) {
+  const clean = name.trim().toLowerCase();
+
+  if (!clean) return
+  if (!selectedTags.value.includes(clean)) {
+    selectedTags.value.push(clean);
   }
+  tagDraft.value = '';
 }
 
-function normalizeTags(rawList: string[]) {
-  const set = new Set<string>();
+function removeTag(name: string) {
+  selectedTags.value = selectedTags.value.filter((t) => t !== name);
+}
 
-  for (const raw of rawList) {
-    const clean = raw.trim().toLocaleLowerCase();
-    if (clean) set.add(clean)
+function onTagKeyDown(e: KeyboardEvent) {
+  if (e.key === 'Enter' || e.key === ',') {
+    e.preventDefault();
+    addTag(tagDraft.value);
+  } else if (e.key === 'Backspace' && !tagDraft.value && selectedTags.value.length) {
+    selectedTags.value.pop();
   }
-  return Array.from(set);
 }
 
 async function handleSubmit() {
-  const typedTags = tagsInput.value.split(',');
-  const tags = normalizeTags([...selectedTags.value, ...typedTags]);
+  const tags = selectedTags.value.slice();
 
   const subtasks = subTaskInput.value
     .split('\n')
@@ -67,8 +83,8 @@ async function handleSubmit() {
     description.value = '';
     priority.value = 'medium';
     deadline.value = '';
-    tagsInput.value = '';
-    selectedTags.value = new Set();
+    selectedTags.value = [];
+    tagDraft.value = '';
     subTaskInput.value = '';
     emit('created');
   }
@@ -134,38 +150,58 @@ async function handleSubmit() {
       type="date"
     />
 
-    <div class="tags-section">
-      <button
-        type="button"
-        class="tags-toggle mono"
-        @click="showExistingTags = !showExistingTags"
-      >
-        {{ showExistingTags ? 'Hide existing tags' : `Browse existing tags (${existingTags.length})` }}
-      </button>
-
+    <div class="tag-picker">
       <div
-        v-if="showExistingTags && existingTags.length"
-        class="existing-tags" 
+        class="tag-picker__field"
+        @click="tagMenuOpen = true"
       >
-        <button
-          v-for="tag in existingTags"
+        <span
+          v-for="tag in selectedTags"
           :key="tag"
-          type="button"
-          class="existing-tag mono"
-          :class="{ active: selectedTags.has(tag) }"
-          @click="toggleExistingTag(tag)"
+          class="tag-picker__chip mono"
         >
           {{ tag }}
+            <span
+              class="tag-picker__chip-remove"
+              @click.stop="removeTag(tag)"
+            >×</span>
+        </span>
+
+        <input
+          v-model="tagDraft"
+          class="tag-picker__input"
+          :placeholder="selectedTags.length ? 'Add another…' : 'Tags, comma separated (optional)'"
+          @keydown="onTagKeyDown"
+          @focus="tagMenuOpen = true"
+        />
+      </div>
+
+      <div
+        v-if="tagMenuOpen"
+        class="tag-picker__backdrop"
+        @click="tagMenuOpen = false"
+      ></div>
+
+      <div v-if="tagMenuOpen" class="tag-picker__menu">
+        <button
+          v-for="s in tagSuggestions"
+          :key="s"
+          type="button"
+          class="tag-picker__item"
+          @click="addTag(s); tagMenuOpen = false"
+        >
+          {{ s }}
+        </button>
+        <button
+          v-if="showCreateTagOption"
+          type="button"
+          class="tag-picker__item tag-picker__item--create"
+          @click="addTag(tagDraft); tagMenuOpen = false"
+        >
+          + Create "{{ tagDraft }}"
         </button>
       </div>
     </div>
-
-    <BaseInput
-      v-model="tagsInput"
-      type="text"
-      placeholder="Tags, comma separated (optional)"
-      maxlength="50"
-    />
 
     <BaseTextarea
       v-model="subTaskInput"
@@ -196,38 +232,38 @@ async function handleSubmit() {
 
 <style scoped>
 .create-form { 
-  display: flex; 
-  flex-direction: column; 
-  gap: 12px; 
-  margin-bottom: 24px; 
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
 }
 
 .create-form__area { 
-  resize: vertical; 
-  min-height: 56px; 
+  resize: vertical;
+  min-height: 56px;
 }
 
 .create-form__title { 
-  font-size: 18px; 
-  margin: 0 0 4px; 
+  font-size: 18px;
+  margin: 0 0 4px;
 }
 
 .create-form__actions { 
-  display: flex; 
-  gap: 10px; 
-  margin-top: 4px; 
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
 }
 
 .create-form__actions .base-button { 
-  flex: 1; 
+  flex: 1;
 }
 
 .priority-switch { 
-  display: flex; 
-  gap: 6px; 
-  background: var(--color-secondary); 
-  border-radius: var(--radius); 
-  padding: 4px; 
+  display: flex;
+  gap: 6px;
+  background: var(--color-secondary);
+  border-radius: var(--radius);
+  padding: 4px;
 }
 
 .priority-switch__opt {
@@ -244,49 +280,99 @@ async function handleSubmit() {
 }
 
 .priority-switch__opt.active { 
-  background: var(--pc); 
-  color: var(--color-ink-text); 
+  background: var(--pc);
+  color: var(--color-ink-text);
 }
 
-.tags-section {
+.tag-picker { 
+  position: relative;
+}
+
+.tag-picker__field {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface-raised);
+  cursor: text;
+}
+
+.tag-picker__chip {
+  background: var(--color-secondary);
+  color: var(--color-secondary-text);
+  font-size: 11px;
+  padding: 3px 6px 3px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tag-picker__chip-remove { 
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1;
+}
+
+.tag-picker__input {
+  border: none;
+  outline: none;
+  flex: 1;
+  min-width: 90px;
+  font-size: 14px;
+  font-family: var(--font-body);
+  background: transparent;
+  color: var(--color-text);
+  padding: 2px 0;
+}
+
+.tag-picker__backdrop { 
+  position: fixed;
+  inset: 0;
+  z-index: 9;
+}
+
+.tag-picker__menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: var(--color-surface-raised);
+  border-radius: 12px;
+  box-shadow: var(--shadow-card);
+  padding: 6px;
+  z-index: 10;
+  max-height: 160px;
+  overflow: auto;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 2px;
 }
 
-.tags-toggle {
-  align-self: flex-start;
-  background: transparent;
-  color: var(--color-text-muted);
-  border: 1px dashed var(--color-border);
-  border-radius: 20px;
-  padding: 5px 12px;
-  font-size: 11px;
-  text-transform: uppercase;
+.tag-picker__item {
+  text-align: left;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-family: var(--font-body);
   cursor: pointer;
-}
-
-.existing-tags {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.existing-tag {
-  border: 1px solid var(--color-border);
   background: transparent;
-  color: var(--color-text-muted);
-  border-radius: 20px;
-  padding: 5px 12px;
-  font-size: 11px;
-  text-transform: uppercase;
-  cursor: pointer;
+  color: var(--color-text);
 }
 
-.existing-tag.active {
-  background: var(--color-ink);
-  color: var(--color-ink-text);
-  border-color: var(--color-ink);
+.tag-picker__item:hover { 
+  background: rgba(127, 127, 127, 0.22);
+}
+
+.tag-picker__item--create { 
+  color: var(--color-ink);
+  font-weight: 600;
 }
 
 .field-label {
@@ -298,8 +384,11 @@ async function handleSubmit() {
 }
 
 .error { 
-  color: var(--color-danger); 
-  font-size: 13px; 
-  margin: 0; 
+  color: var(--color-danger);
+  
+  font-size: 13px;
+  
+  margin: 0;
+  
 }
 </style>
