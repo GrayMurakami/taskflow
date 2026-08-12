@@ -84,8 +84,10 @@ async function handleSubmit() {
       type="text"
       placeholder="Task name"
       maxlength="50"
+      autofocus
       required 
     />
+    
     <BaseTextarea 
       v-model="description" 
       placeholder="Description (optional)"
