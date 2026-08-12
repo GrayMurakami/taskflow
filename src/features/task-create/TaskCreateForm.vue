@@ -1,29 +1,50 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useTasks } from '@/entities/task/useTasks'
 import type { NewTask } from '@/entities/task/Task.types'
 import BaseInput from '@/shared/ui/BaseInput.vue'
 import BaseButton from '@/shared/ui/BaseButton.vue'
 import BaseTextarea from '@/shared/ui/BaseTextarea.vue'
 
-const { createTask, isLoading, error } = useTasks();
+const { tasks, createTask, isLoading, error } = useTasks();
 
 const title = ref('');
 const description = ref('');
 const priority = ref<NewTask['priority']>('medium');
 const deadline = ref('');
 const tagsInput = ref('');
+const selectedTags = ref<Set<string>>(new Set());
 const subTaskInput = ref('');
 
 const emit = defineEmits<{
   created: []
 }>();
 
+const existingTags = computed(() => 
+  Array.from(new Set(tasks.value.flatMap((t) => t.tags))).sort()
+);
+
+function toggleExistingTag(tag: string) {
+  if (selectedTags.value.has(tag)) {
+    selectedTags.value.delete(tag);
+  } else {
+    selectedTags.value.add(tag);
+  }
+}
+
+function normalizeTags(rawList: string[]) {
+  const set = new Set<string>();
+
+  for (const raw of rawList) {
+    const clean = raw.trim().toLocaleLowerCase();
+    if (clean) set.add(clean)
+  }
+  return Array.from(set);
+}
+
 async function handleSubmit() {
-  const tags = tagsInput.value
-    .split(',')
-    .map(t => t.trim())
-    .filter(Boolean);
+  const typedTags = tagsInput.value.split(',');
+  const tags = normalizeTags([...selectedTags.value, ...typedTags]);
 
   const subtasks = subTaskInput.value
     .split('\n')
@@ -46,6 +67,7 @@ async function handleSubmit() {
     priority.value = 'medium';
     deadline.value = '';
     tagsInput.value = '';
+    selectedTags.value = new Set();
     subTaskInput.value = '';
     emit('created');
   }
@@ -108,12 +130,30 @@ async function handleSubmit() {
       v-model="deadline"
       type="date"
     />
+
+    <div
+      v-if="existingTags.length"
+      class="existing-tags" 
+    >
+      <button
+        v-for="tag in existingTags"
+        :key="tag"
+        type="button"
+        class="existing-tag mono"
+        :class="{ active: selectedTags.has(tag) }"
+        @click="toggleExistingTag(tag)"
+      >
+        {{ tag }}
+      </button>
+
+    </div>
     <BaseInput
       v-model="tagsInput"
       type="text"
       placeholder="Tags, comma separated (optional)"
       maxlength="50"
     />
+
     <BaseTextarea
       v-model="subTaskInput"
       placeholder="Subtasks, one per line (optional)"
@@ -193,6 +233,29 @@ async function handleSubmit() {
 .priority-switch__opt.active { 
   background: var(--pc); 
   color: var(--color-ink-text); 
+}
+
+.existing-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.existing-tag {
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-muted);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 11px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.existing-tag.active {
+  background: var(--color-ink);
+  color: var(--color-ink-text);
+  border-color: var(--color-ink);
 }
 
 .field-label {
