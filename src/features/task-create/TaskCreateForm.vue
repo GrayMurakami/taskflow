@@ -13,6 +13,7 @@ const description = ref('');
 const priority = ref<NewTask['priority']>('medium');
 const deadline = ref('');
 const tagsInput = ref('');
+const showExistingTags = ref(false);
 const selectedTags = ref<Set<string>>(new Set());
 const subTaskInput = ref('');
 
@@ -87,7 +88,7 @@ async function handleSubmit() {
       autofocus
       required 
     />
-    
+
     <BaseTextarea 
       v-model="description" 
       placeholder="Description (optional)"
@@ -133,22 +134,32 @@ async function handleSubmit() {
       type="date"
     />
 
-    <div
-      v-if="existingTags.length"
-      class="existing-tags" 
-    >
+    <div class="tags-section">
       <button
-        v-for="tag in existingTags"
-        :key="tag"
         type="button"
-        class="existing-tag mono"
-        :class="{ active: selectedTags.has(tag) }"
-        @click="toggleExistingTag(tag)"
+        class="tags-toggle mono"
+        @click="showExistingTags = !showExistingTags"
       >
-        {{ tag }}
+        {{ showExistingTags ? 'Hide existing tags' : `Browse existing tags (${existingTags.length})` }}
       </button>
 
+      <div
+        v-if="showExistingTags && existingTags.length"
+        class="existing-tags" 
+      >
+        <button
+          v-for="tag in existingTags"
+          :key="tag"
+          type="button"
+          class="existing-tag mono"
+          :class="{ active: selectedTags.has(tag) }"
+          @click="toggleExistingTag(tag)"
+        >
+          {{ tag }}
+        </button>
+      </div>
     </div>
+
     <BaseInput
       v-model="tagsInput"
       type="text"
@@ -235,6 +246,24 @@ async function handleSubmit() {
 .priority-switch__opt.active { 
   background: var(--pc); 
   color: var(--color-ink-text); 
+}
+
+.tags-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tags-toggle {
+  align-self: flex-start;
+  background: transparent;
+  color: var(--color-text-muted);
+  border: 1px dashed var(--color-border);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 11px;
+  text-transform: uppercase;
+  cursor: pointer;
 }
 
 .existing-tags {
