@@ -178,12 +178,15 @@ async function handleSubmit() {
       </div>
 
       <div
-        v-if="tagMenuOpen"
+        v-if="tagMenuOpen && (tagSuggestions.length || showCreateTagOption)"
         class="tag-picker__backdrop"
         @click="tagMenuOpen = false"
       ></div>
 
-      <div v-if="tagMenuOpen" class="tag-picker__menu">
+      <div
+        v-if="tagMenuOpen  && (tagSuggestions.length || showCreateTagOption)"
+        class="tag-picker__menu"
+      >
         <button
           v-for="s in tagSuggestions"
           :key="s"
