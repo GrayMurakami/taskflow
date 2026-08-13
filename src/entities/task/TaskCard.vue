@@ -206,7 +206,7 @@ function formatDate(dateString: string) {
   flex: 1; 
   padding: 14px 16px 14px 15px; 
   min-width: 0; 
-  padding-right: 32px; 
+  padding-right: 44px; 
 }
 
 .ticket__top { 
