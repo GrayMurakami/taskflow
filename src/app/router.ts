@@ -1,6 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuth } from '@/entities/user/useAuth'
 
+let authReadyPromise: Promise<void> | null = null;
+
+export function setAuthReadyPromise(promise: Promise<void>) {
+  authReadyPromise = promise;
+}
+
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -19,7 +25,11 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach((to) => {
+router.beforeEach(async (to) => {
+  if (authReadyPromise) {
+    await authReadyPromise;
+  }
+
   const { user } = useAuth();
 
   if (to.meta.requiresAuth && !user.value) {
