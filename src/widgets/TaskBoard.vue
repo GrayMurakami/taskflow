@@ -144,7 +144,7 @@ async function dropOnColumn(status: 'todo' | 'inprogress' | 'done') {
     </div>
     <div class="stat-card">
       <span class="stat-card__label mono">
-        In Progres
+        In Progress
       </span>
       <span 
         class="stat-card__value"
