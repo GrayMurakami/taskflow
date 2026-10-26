@@ -202,7 +202,7 @@ async function handleSubmit() {
           class="tag-picker__item tag-picker__item--create"
           @click="addTag(tagDraft); tagMenuOpen = false"
         >
-          + C "{{ tagDraft }}"
+          + Create "{{ tagDraft }}"
         </button>
       </div>
     </div>
