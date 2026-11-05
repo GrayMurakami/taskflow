@@ -167,7 +167,7 @@ async function dropOnColumn(status: 'todo' | 'inprogress' | 'done') {
     <div class="stat-card">
       <div class="stat-card__row">
         <span class="stat-card__label mono">
-          Completion тестируем
+          Completion
         </span>
         <span class="stat-card__value stat-card__value--sm">
           {{ stats.pct }}%
